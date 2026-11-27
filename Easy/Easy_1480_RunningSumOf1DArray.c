@@ -1,31 +1,26 @@
-int* twoSum(int* nums, int numsSize, int target, int* returnSize)
+int* runningSum(int* nums, int numsSize, int* returnSize)
 {
-    int* result = (int*)malloc(2 * sizeof(int));
+    *returnSize = numsSize;
 
-    if (result == NULL)
+    int* result = (int*)malloc(numsSize * sizeof(int));
+
+    if (result == NULL && numsSize > 0)
     {
         *returnSize = 0;
         return NULL;
     }
 
-    *returnSize = 2;
-
-    for (int i = 0; i < numsSize; i++)
+    if (numsSize == 0)
     {
-        for (int j = i + 1; j < numsSize; j++)
-        {
-            if (nums[i] + nums[j] == target)
-            {
-                result[0] = i;
-                result[1] = j;
-
-                return result;
-            }
-        }
+        return result;
     }
 
-    *returnSize = 0;
-    free(result);
+    result[0] = nums[0];
 
-    return NULL;
+    for (int i = 1; i < numsSize; i++)
+    {
+        result[i] = result[i - 1] + nums[i];
+    }
+
+    return result;
 }
